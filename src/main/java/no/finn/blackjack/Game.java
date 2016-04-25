@@ -51,10 +51,10 @@ public class Game {
     }
 
     public int winner() {
-        if (score(samHand) == 21 || score(dealerHand) > 21) {
-            return SAM;
+        if (score(samHand) > 21 || (score(samHand) != 21 && score(dealerHand) <= 21)) {
+            return DEALER;
         }
-        return DEALER;
+        return SAM;
     }
 
     private boolean noPlayerHasBlackjack() {

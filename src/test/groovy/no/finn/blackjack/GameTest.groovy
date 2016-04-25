@@ -3,9 +3,7 @@ package no.finn.blackjack
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static no.finn.blackjack.Game.DEALER
-import static no.finn.blackjack.Game.SAM
-import static no.finn.blackjack.Game.score
+import static no.finn.blackjack.Game.*
 
 class GameTest extends Specification {
     def "Initial hands are empty"() {
@@ -172,6 +170,30 @@ class GameTest extends Specification {
         then:
           game.winner() == DEALER
 
+    }
+
+    def "Sam wins when both initial cards is blackjack"() {
+        given:
+          def game = new Game(makeTestDeck([10, 1], [10, 1]))
+          game.deal()
+
+        when:
+          game.play()
+
+        then:
+          game.winner() == SAM
+    }
+
+    def "Dealer wins when bot initial cars is bust"() {
+        given:
+          def game = new Game(makeTestDeck([1, 1], [1, 1]))
+          game.deal()
+
+        when:
+          game.play()
+
+        then:
+          game.winner() == DEALER
     }
 
     Deck makeTestDeck(def samCards, def dealerCards) {
