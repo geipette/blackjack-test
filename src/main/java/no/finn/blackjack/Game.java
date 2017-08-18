@@ -11,8 +11,8 @@ public class Game {
     public static int DEALER = 1;
 
     private Deck deck;
-    private List<Integer> samHand = new ArrayList<>();
-    private List<Integer> dealerHand = new ArrayList<>();
+    private List<Card> samHand = new ArrayList<>();
+    private List<Card> dealerHand = new ArrayList<>();
 
     public Game() {
         this(new Deck());
@@ -22,17 +22,21 @@ public class Game {
         this.deck = deck;
     }
 
-    public static int score(List<Integer> hand) {
+    public static int score(List<String> hand) {
         return hand.stream().reduce(0, (result, card) ->
-                result + (card == 1 ? 11 : Math.min(card, 10))
+                result + cardValue(card)
         );
     }
 
-    public List<Integer> getSamHand() {
+    private static int cardValue(Card card) {
+        return card.getValue() == 1 ? 11 : Math.min(card.getValue(), 10);
+    }
+
+    public List<String> getSamHand() {
         return unmodifiableList(samHand);
     }
 
-    public List<Integer> getDealerHand() {
+    public List<String> getDealerHand() {
         return unmodifiableList(dealerHand);
     }
 

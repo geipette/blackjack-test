@@ -1,25 +1,25 @@
 package no.finn.blackjack;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.IntStream;
+import java.util.*;
 
-public class Deck implements Iterable<Integer> {
-    private List<Integer> cards = new ArrayList<>(52);
+import static java.util.stream.IntStream.range;
+
+public class Deck implements Iterable<Card> {
+    private List<Card> cards = new ArrayList<>(52);
 
     public Deck() {
-        IntStream.range(1, 53).forEach(value -> cards.add(value % 13 + 1));
+        Arrays.asList('d', 'c', 's', 'h').stream().forEach(suit ->
+                range(1, 14).forEach(value -> cards.add(new Card(value, suit)))
+        );
         Collections.shuffle(cards);
     }
 
-    Deck(List<Integer> cards) {
+    Deck(List<Card> cards) {
         this.cards.addAll(cards);
     }
 
     @Override
-    public Iterator<Integer> iterator() {
+    public Iterator<Card> iterator() {
         return cards.iterator();
     }
 
@@ -27,7 +27,8 @@ public class Deck implements Iterable<Integer> {
         return cards.size();
     }
 
-    public int dealCard() {
+    public Card dealCard() {
         return cards.remove(0);
     }
+
 }
